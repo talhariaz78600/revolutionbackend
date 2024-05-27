@@ -42,6 +42,9 @@ router.post('/:userId/update-profile', async (req, res) => {
         if (mobileNumber) {
             currentUser.mobileNumber = mobileNumber
         }
+        if(address){
+            currentUser.address=address;
+        }
       
         await currentUser.save()
         res.status(200).json({ message: 'User profile Updated Successfully', currentUser });

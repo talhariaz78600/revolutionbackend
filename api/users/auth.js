@@ -50,7 +50,7 @@ router.post('/login', async (req, res) => {
 router.post('/sing-up', async (req, res) => {
 
     try {
-        const {userName,email, password,mobileNumber} = req.body;
+        const {userName,email, password,mobileNumber,address} = req.body;
 
         if (!email || !password || !mobileNumber || !userName) {
             return res.status(400).json({ message: "Invalid Feilds" });
@@ -63,7 +63,7 @@ router.post('/sing-up', async (req, res) => {
             return res.status(404).json({ message: "User Already Exist" });
         }
 
-        const newuser = new User({userName,email, password: hashedPassword, mobileNumber})
+        const newuser = new User({userName,email, password: hashedPassword, mobileNumber,address})
         newuser.status = true;
         jwt.sign({ id: newuser._id }, secretID, { expiresIn: '30d' }, async (err, UserToken) => {
             newuser.sessionExpiration = new Date().getTime() + (1000 * 60 * 60 * 24 * 30); // 30 days in milliseconds
