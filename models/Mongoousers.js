@@ -15,6 +15,9 @@ let userSchema = mongoose.Schema({
     password: {
         type: String,
     },
+    address:{
+        type:String,
+    },
     status: {
         type: Boolean,
         default: false

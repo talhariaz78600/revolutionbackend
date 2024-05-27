@@ -21,7 +21,7 @@ router.get('/get_all_users', async (req, res) => {
 router.post('/:userId/update-profile', async (req, res) => {
     try {
         const { userId } = req.params
-        const { email, mobileNumber,userName} = req.body
+        const { email, mobileNumber,userName,address} = req.body;
         
         if (!userId) {
             return res.status(400).json({ message: 'Invalid User Id' });

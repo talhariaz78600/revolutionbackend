@@ -15,15 +15,6 @@ const authRouter = require('./api/users/auth');
 const blogRouter = require('./api/blog/blog');
 
 
-
-// app.use(
-//   cors({
-//     origin: ['https://omd-admin-panel.netlify.app', 'http://localhost:3000',],
-//     origin: true,
-//   })
-// );
-
-
 const uri = process.env.Mongoo_URI;
 const connectDB = async () => {
   mongoose.connect(uri, {
