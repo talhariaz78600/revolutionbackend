@@ -41,6 +41,17 @@ router.get('/getblogdata', async (req, res) => {
     }
 })
 
+router.get('/getallblog', async (req, res) => {
+    try {
+        
+        const finddata = await Blog.find()
+        res.status(200).json({ finddata,message:"data fetch successfully" })
+
+
+    } catch (error) {
+        res.status(500).json({ errors:error.message, message:"Internal server error"})
+    }
+})
 router.get("/getsingleblog/id", async (req, res) => {
     const { id } = req.params;
     try {
