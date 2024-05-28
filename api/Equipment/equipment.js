@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Equipment = require("../../models/equipment")
 
-router.post("/createEquipment", async (req, res) => {
+router.post("/createProduct", async (req, res) => {
     const { title, price,hostingfee ,condition,imageUrl,power,machines} = req.body;
     try {
         const data = new Equipment({
@@ -22,7 +22,7 @@ router.post("/createEquipment", async (req, res) => {
 
 })
 
-router.get('/getEquipment', async (req, res) => {
+router.get('/getProducts', async (req, res) => {
     try {
         const finddata = await Equipment.find()
         res.status(200).json({ finddata,message:"data fetch successfully" })
@@ -32,7 +32,21 @@ router.get('/getEquipment', async (req, res) => {
     }
 })
 
-router.put("/updateEquipment/id", async (req, res) => {
+router.get('/getsingleProduct/:id', async (req, res) => {
+    const {id}=req.params;
+    try {
+        let finddata=await Equipment.findById(id);
+        if(!finddata){
+            return res.status(400).json({message:"product not found"})
+        }
+    
+        res.status(200).json({ finddata,message:"data fetch successfully" })
+
+    } catch (error) {
+        res.status(500).json({ errors:error.message, message:"Internal server error"})
+    }
+})
+router.put("/updateProduct/id", async (req, res) => {
     const { id } = req.params;
     const { title, price,hostingfee ,condition,power,machines} = req.body;
     try {
@@ -59,7 +73,7 @@ router.put("/updateEquipment/id", async (req, res) => {
             data.machiens=machiens;
         }
         await data.save();
-        res.status(200).json({ message: "Equipment successfully updated", data })
+        res.status(200).json({ message: "Product successfully updated", data })
 
 
     } catch (error) {
@@ -67,7 +81,7 @@ router.put("/updateEquipment/id", async (req, res) => {
     }
 })
 
-router.delete('/deleteEquipment/:id', async (req, res) => {
+router.delete('/deleteProduct/:id', async (req, res) => {
     const { id } = req.params;
     try {
         let data = await Equipment.findOne({ _id: id });

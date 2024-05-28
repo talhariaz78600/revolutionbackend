@@ -13,6 +13,7 @@ const adminRouter = require('./api/admin/admin');
 const userRouter = require('./api/users/user');
 const authRouter = require('./api/users/auth');
 const blogRouter = require('./api/blog/blog');
+const productRouter = require('./api/Equipment/equipment');
 
 
 const uri = process.env.Mongoo_URI;
@@ -32,7 +33,7 @@ const connectDB = async () => {
 
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
-
+app.use('/api/product',productRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/blog', blogRouter);
 
