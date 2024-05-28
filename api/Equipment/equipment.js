@@ -3,7 +3,7 @@ const router = express.Router();
 const Equipment = require("../../models/equipment")
 
 router.post("/createProduct", async (req, res) => {
-    const { title, price,hostingfee ,condition,imageUrl,power,machines} = req.body;
+    const { title, price,hostingfee ,condition,imageUrl,power,machines,producttype} = req.body;
     try {
         const data = new Equipment({
             title,
@@ -12,7 +12,8 @@ router.post("/createProduct", async (req, res) => {
             condition,
             imageUrl,
             power,
-            machines
+            machines,
+            producttype
         })
         await data.save();
         res.status(200).json({ message: "item add successfully", data })
@@ -48,7 +49,7 @@ router.get('/getsingleProduct/:id', async (req, res) => {
 })
 router.put("/updateProduct/id", async (req, res) => {
     const { id } = req.params;
-    const { title, price,hostingfee ,condition,power,machines} = req.body;
+    const { title, price,hostingfee ,condition,power,machines,producttype} = req.body;
     try {
         const data = await Equipment.findOne({ _id: id });
         if (!data) {
@@ -70,7 +71,10 @@ router.put("/updateProduct/id", async (req, res) => {
             data.power=power;
         }
         if(machines){
-            data.machiens=machiens;
+            data.machiens=machines;
+        }
+        if(producttype){
+            data.producttype=producttype;
         }
         await data.save();
         res.status(200).json({ message: "Product successfully updated", data })

@@ -1,5 +1,8 @@
 let mongoose = require('mongoose');
 let EquipmentSchema = mongoose.Schema({
+    producttype:{
+        type:String,
+    },
     title:{
         type:String,
     },
