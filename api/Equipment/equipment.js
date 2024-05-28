@@ -90,7 +90,7 @@ router.delete('/deleteProduct/:id', async (req, res) => {
     try {
         let data = await Equipment.findOne({ _id: id });
         if (!data) {
-          return res.status(400).json({ message: " noitem found" })
+          return res.status(400).json({ message: " no item found" })
         }
         data = await Equipment.findByIdAndDelete(id)
         res.status(200).json({ message: "item successfully deleted", data })

@@ -14,7 +14,7 @@ const userRouter = require('./api/users/user');
 const authRouter = require('./api/users/auth');
 const blogRouter = require('./api/blog/blog');
 const productRouter = require('./api/Equipment/equipment');
-
+const orders=require('./api/foodorder/foodorder')
 
 const uri = process.env.Mongoo_URI;
 const connectDB = async () => {
@@ -36,6 +36,8 @@ app.use('/api/auth', authRouter);
 app.use('/api/product',productRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/blog', blogRouter);
+app.use('/api/order',orders );
+
 
 app.get('/', async (req, res) => {
   res.json({ message: `server is running at ${PORT}` })
