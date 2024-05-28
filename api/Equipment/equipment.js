@@ -47,7 +47,7 @@ router.get('/getsingleProduct/:id', async (req, res) => {
         res.status(500).json({ errors:error.message, message:"Internal server error"})
     }
 })
-router.put("/updateProduct/id", async (req, res) => {
+router.put("/updateProduct/:id", async (req, res) => {
     const { id } = req.params;
     const { title, price,hostingfee ,condition,power,machines,producttype} = req.body;
     try {
@@ -92,7 +92,7 @@ router.delete('/deleteProduct/:id', async (req, res) => {
         if (!data) {
           return res.status(400).json({ message: " noitem found" })
         }
-        data = await Equipment.findByIdandDelete(id)
+        data = await Equipment.findByIdAndDelete(id)
         res.status(200).json({ message: "item successfully deleted", data })
     } catch (error) {
         res.status(500).json({ message: "Internal server error" })
