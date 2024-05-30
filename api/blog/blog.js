@@ -52,7 +52,7 @@ router.get('/getallblog', async (req, res) => {
         res.status(500).json({ errors:error.message, message:"Internal server error"})
     }
 })
-router.get("/getsingleblog/id", async (req, res) => {
+router.get("/getsingleblog/:id", async (req, res) => {
     const { id } = req.params;
     try {
         const data = await Blog.findOne({ _id: id });
