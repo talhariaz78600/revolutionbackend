@@ -5,8 +5,8 @@ const passport = require("passport");
 passport.use(
 	new GoogleStrategy(
 		{
-			clientID: process.env.CLIENT_ID,
-			clientSecret: process.env.CLIENT_SECRET,
+			clientID: `${process.env.CLIENT_ID}`,
+			clientSecret:`${process.env.CLIENT_SECRET}`,
 			callbackURL: "https://revolutionbackend.vercel.app/auth/google/callback",
 			scope: ["profile", "email"],
 		},
