@@ -71,7 +71,7 @@ router.put("/updateProduct/:id", async (req, res) => {
             data.power=power;
         }
         if(machines){
-            data.machiens=machines;
+            data.machines=machines;
         }
         if(producttype){
             data.producttype=producttype;
