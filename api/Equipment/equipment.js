@@ -99,5 +99,25 @@ router.delete('/deleteProduct/:id', async (req, res) => {
     }
 })
 
+router.put("/updateStatus/:id", async (req, res) => {
+    const { id } = req.params;
+    const { status} = req.body;
+    try {
+        const data = await Equipment.findOne({ _id: id });
+        if (!data) {
+          return  res.status(400).json({ message: 'item not found' })
+        }
+        
+            data.status = status;
+        
+       
+        await data.save();
+        res.status(200).json({ message: "Product status successfully updated", data })
+
+
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" })
+    }
+})
 
 module.exports = router;

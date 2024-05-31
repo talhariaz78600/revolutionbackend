@@ -1,10 +1,10 @@
 let mongoose = require('mongoose');
 let EquipmentSchema = mongoose.Schema({
-    producttype:{
-        type:String,
+    producttype: {
+        type: String,
     },
-    title:{
-        type:String,
+    title: {
+        type: String,
     },
     price: {
         type: Number,
@@ -12,21 +12,25 @@ let EquipmentSchema = mongoose.Schema({
     imageUrl: {
         type: String,
     },
-    condition:{
-        type:String
+    condition: {
+        type: String
     },
-    power:{
-        type:String
+    power: {
+        type: String
     },
-    machines:{
-        type:String
+    machines: {
+        type: String
     },
-    hostingfee:{
-    type:Number
+    hostingfee: {
+        type: Number
     },
-    data:{
+    data: {
         type: Date,
         default: Date.now
+    },
+    status: {
+        type: Boolean,
+        default: false
     }
 
 }, { timestamps: true });
