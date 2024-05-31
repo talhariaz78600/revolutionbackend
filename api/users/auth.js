@@ -50,9 +50,9 @@ router.post('/login', async (req, res) => {
 router.post('/sing-up', async (req, res) => {
 
     try {
-        const {userName,email, password,mobileNumber,address} = req.body;
+        const {firstname,lastname,email, password,mobileNumber,address} = req.body;
 
-        if (!email || !password || !mobileNumber || !userName) {
+        if (!email || !password || !firstname || !lastname) {
             return res.status(400).json({ message: "Invalid Feilds" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -63,7 +63,7 @@ router.post('/sing-up', async (req, res) => {
             return res.status(404).json({ message: "User Already Exist" });
         }
 
-        const newuser = new User({userName,email, password: hashedPassword, mobileNumber,address})
+        const newuser = new User({firstname,lastname,email, password: hashedPassword})
         newuser.status = true;
         jwt.sign({ id: newuser._id }, secretID, { expiresIn: '30d' }, async (err, UserToken) => {
             newuser.sessionExpiration = new Date().getTime() + (1000 * 60 * 60 * 24 * 30); // 30 days in milliseconds

@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require('mongoose');
 const cors = require("cors");
 const dotenv = require("dotenv");
+const passport = require("passport");
 dotenv.config();
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 2200;
@@ -15,8 +16,34 @@ const authRouter = require('./api/users/auth');
 const blogRouter = require('./api/blog/blog');
 const productRouter = require('./api/Equipment/equipment');
 const orders=require('./api/foodorder/foodorder')
+const authRoute = require("./routes/googleAuth");
+const passportStrategy = require("./passport");
 
+
+const session = require('express-session');
 const uri = process.env.Mongoo_URI;
+
+app.use(session({
+  secret: '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',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Set to true if using HTTPS
+}));
+
+// const cookieSession = require("cookie-session");
+// // app.use(
+// // 	cookieSession({
+// // 		name: "session",
+// // 		keys: ["somesessionkey"],
+// // 		maxAge: 24 * 60 * 60 * 100,
+// // 	})
+// // );
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
 const connectDB = async () => {
   mongoose.connect(uri, {
     useNewUrlParser: true,
@@ -28,7 +55,7 @@ const connectDB = async () => {
     }).catch((error) => {
       console.error("Unable to connect to MongoDB", error);
     })
-}
+  }
 
 
 app.use('/api/users', userRouter);
@@ -36,8 +63,8 @@ app.use('/api/auth', authRouter);
 app.use('/api/product',productRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/blog', blogRouter);
-app.use('/api/order',orders );
-
+app.use('/api/order',orders);
+app.use("/auth", authRoute);
 
 app.get('/', async (req, res) => {
   res.json({ message: `server is running at ${PORT}` })
@@ -50,3 +77,4 @@ connectDB().then(() => {
     console.log(`Server is running at ${PORT}`);
   });
 })
+

@@ -21,7 +21,7 @@ router.get('/get_all_users', async (req, res) => {
 router.post('/:userId/update-profile', async (req, res) => {
     try {
         const { userId } = req.params
-        const { email, mobileNumber,userName,address} = req.body;
+        const { email, mobileNumber,firstname,lastname,address} = req.body;
         
         if (!userId) {
             return res.status(400).json({ message: 'Invalid User Id' });
@@ -36,8 +36,11 @@ router.post('/:userId/update-profile', async (req, res) => {
         if (email) {
             currentUser.email = email
         }
-        if (userName) {
-            currentUser.userName = userName
+        if (firstname) {
+            currentUser.firstname = fristname
+        }
+        if (lastname) {
+            currentUser.lastname = lastname
         }
         if (mobileNumber) {
             currentUser.mobileNumber = mobileNumber
