@@ -4,31 +4,43 @@ const User=require("../models/Mongoousers")
 const secretID = process.env.secret_ID_JWT
 const jwt = require('jsonwebtoken');
 // const bcrypt = require('bcrypt');
-router.get("/login/success", async(req, res) => {
+router.get('/login/success', async (req, res) => {
 	try {
-		if (!req.user) {
-			res.status(400).json({message:"Invalid request"})
-		}
-
-		const newUser=await User.findOne({email:req.user.emails.value})
-		if(!newUser){
-			console.log(req.user);
-			const newuser = new User({firstname:req.user.name.givenName,lastname:req.user.name.familyName,email:req.user.emails.value})
-			newuser.status = true;
-			jwt.sign({ id: newuser._id }, secretID, { expiresIn: '30d' }, async (err, UserToken) => {
-				newuser.sessionExpiration = new Date().getTime() + (1000 * 60 * 60 * 24 * 30); // 30 days in milliseconds
-				newuser.jwttoken = UserToken;
-				await newuser.save();
-				res.status(200).json({ message: 'Successfully Sign In', newuser });
-			});
-
-		}
-		res.status(200).json({newuser:newUser})
+	  if (!req.user) {
+		return res.status(400).json({ message: 'Invalid request' });
+	  }
+  
+	  const userEmail = req.user.emails.value; // Correctly accessing the email value
+	  let existingUser = await User.findOne({ email: userEmail });
+  
+	  if (!existingUser) {
+		console.log(req.user);
+  
+		const newUser = new User({
+		  firstname: req.user.name.givenName,
+		  lastname: req.user.name.familyName,
+		  email: userEmail,
+		  status: true,
+		});
+  
+		jwt.sign({ id: newUser._id }, secretID, { expiresIn: '30d' }, async (err, UserToken) => {
+		  if (err) {
+			return res.status(500).json({ message: 'Token generation failed', errors: err.message });
+		  }
+  
+		  newUser.sessionExpiration = new Date().getTime() + (1000 * 60 * 60 * 24 * 30); // 30 days in milliseconds
+		  newUser.jwttoken = UserToken;
+		  await newUser.save();
+  
+		  return res.status(200).json({ message: 'Successfully signed in', newuser: newUser });
+		});
+	  } else {
+		return res.status(200).json({ newuser: existingUser });
+	  }
 	} catch (error) {
-		res.status(500).json({message:"internel server error",errors:error.message})
+	  return res.status(500).json({ message: 'Internal server error', errors: error.message });
 	}
-	
-});
+  });
 
 router.get("/login/failed", (req, res) => {
 	res.status(401).json({
