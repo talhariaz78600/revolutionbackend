@@ -23,15 +23,23 @@ const passportStrategy = require("./passport");
 const session = require('express-session');
 const uri = process.env.Mongoo_URI;
 
+const cookieParser = require('cookie-parser');
+
+app.use(cookieParser());
 
 
-
+app.use(cors({
+  origin: '*', // Allow all origins
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+}));
 
 app.use(session({
   secret: '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',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } // Set to true if using HTTPS
+  cookie: { secure: false, httpOnly: true } 
 }));
 
 
