@@ -2,16 +2,19 @@ const router = require("express").Router();
 const passport = require("passport");
 // const User=require("../models/")
 router.get("/login/success", (req, res) => {
-	if (req.user) {
-		console.log(req.user);
-		res.status(200).json({
-			error: false,
-			message: "Successfully Loged In",
-			user: req.user,
-		});
-	} else {
-		res.status(403).json({ error: true, message: "Not Authorized" });
+	try {
+		if (req.user) {
+			console.log(req.user);
+			res.status(200).json({
+				error: false,
+				message: "Successfully Loged In",
+				user: req.user,
+			});
+		} 
+	} catch (error) {
+		res.status(500).json({message:"internel server error ",errors:error})
 	}
+
 });
 
 router.get("/login/failed", (req, res) => {
