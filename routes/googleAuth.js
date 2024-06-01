@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const passport = require("passport");
-
+const User = require('../models/Mongoousers')
+const secretID = process.env.secret_ID_JWT
+const jwt = require('jsonwebtoken');
 // Login Success Route
 router.get("/login/success", (req, res) => {
 	if (req.user) {
@@ -32,13 +34,26 @@ router.get("/google", passport.authenticate('google', { scope: ['email', 'profil
 router.get(
 	"/google/callback",
 	passport.authenticate('google', { session: false, failureRedirect: '/login' }),
-	(req, res) => {
+	async (req, res) => {
 		// User data is now available in req.user
 		const userData = req.user;
 		console.log('User Data:', userData);
+		const data = await User.findOne({ email: userData.emails[0].value })
 
-		// Pass user data as a query parameter or handle as needed
-		res.redirect(`${process.env.CLIENT_URL}?userdata=${encodeURIComponent(JSON.stringify(userData))}`);
+		if (data) {
+			res.redirect(`${process.env.CLIENT_URL}?userdata=${encodeURIComponent(JSON.stringify(data))}`);
+		} else {
+			const newuser = new User({ firstname: userData.name.givenName, lastname: userData.name.familyName, email: userData.emails[0].value })
+			newuser.status = true;
+			jwt.sign({ id: newuser._id }, secretID, { expiresIn: '30d' }, async (err, UserToken) => {
+				newuser.sessionExpiration = new Date().getTime() + (1000 * 60 * 60 * 24 * 30); // 30 days in milliseconds
+				newuser.jwttoken = UserToken;
+				await newuser.save();
+			});
+
+			res.redirect(`${process.env.CLIENT_URL}?userdata=${encodeURIComponent(JSON.stringify(newuser))}`);
+
+		}
 	}
 );
 // Logout Route
