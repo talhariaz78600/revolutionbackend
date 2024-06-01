@@ -16,7 +16,7 @@ passport.use(
   
 		  if (existingUser) {
 			// User already exists in the database
-			return callback(null, existingUser,`https://revolutionmining.vercel.app?userId=${newUser._id}`);
+			return callback(null, existingUser);
 			
 		  }
   
@@ -29,7 +29,7 @@ passport.use(
 		  });
   
 		  await newUser.save();
-		  return callback(null, newUser,`https://revolutionmining.vercel.app?userId=${newUser._id}`);
+		  return callback(null, newUser);
 		} catch (error) {
 		  return callback(error, null);
 		}
