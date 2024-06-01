@@ -34,8 +34,13 @@ router.get("/google/callback",passport.authenticate("google", {
 
 router.get("/logout", (req, res) => {
 	try {
-		req.logout();
-		res.status(200).json({message:"user successfully logout"})
+		req.logout((err) => {
+			if (err) {
+			  return next(err);
+			}
+			
+			res.status(200).json({message:"user successfully logout"})
+		  });
 	} catch (error) {
 		res.status(500).json({message:"internal server error",errors:error.message})
 	}
