@@ -32,13 +32,6 @@ router.get("/google/callback",passport.authenticate("google", {
 	
 );
 
-router.get(`${process.env.CLIENT_URL}`, (req, res) => {
-	// Access the authenticated user from req.user
-	console.log(req.user);
-  
-	// Redirect or send the user data to the client as needed
-	res.redirect('/');
-  });
 
 router.get("/logout", (req, res) => {
 	try {
