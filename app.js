@@ -22,13 +22,8 @@ const passportStrategy = require("./passport");
 
 const session = require('express-session');
 const uri = process.env.Mongoo_URI;
-const corsOptions = {
-  origin: 'https://revolutionmining.vercel.app', // Frontend URL
-  credentials: true, // Allow cookies to be sent
-  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
-};
 
-app.use(cors(corsOptions));
+
 
 
 
@@ -39,14 +34,6 @@ app.use(session({
   cookie: { secure: false } // Set to true if using HTTPS
 }));
 
-// const cookieSession = require("cookie-session");
-// // app.use(
-// // 	cookieSession({
-// // 		name: "session",
-// // 		keys: ["somesessionkey"],
-// // 		maxAge: 24 * 60 * 60 * 100,
-// // 	})
-// // );
 
 app.use(passport.initialize());
 app.use(passport.session());

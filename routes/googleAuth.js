@@ -1,22 +1,23 @@
 const router = require("express").Router();
 const passport = require("passport");
-// const User=require("../models/")
-router.get("/login/success", (req, res) => {
-	try {
-		if (req.user) {
-			console.log(req.user);
-			res.status(200).json({
-				error: false,
-				message: "Successfully Loged In",
-				user: req.user,
-			});
-		} 
-	} catch (error) {
-		res.status(500).json({message:"internel server error ",errors:error})
-	}
 
+// Login Success Route
+router.get("/login/success", (req, res) => {
+	if (req.user) {
+		res.status(200).json({
+			error: false,
+			message: "Successfully Logged In",
+			user: req.user,
+		});
+	} else {
+		res.status(403).json({
+			error: true,
+			message: "Not Authenticated",
+		});
+	}
 });
 
+// Login Failure Route
 router.get("/login/failed", (req, res) => {
 	res.status(401).json({
 		error: true,
@@ -24,31 +25,23 @@ router.get("/login/failed", (req, res) => {
 	});
 });
 
-router.get("/google", passport.authenticate('google', { scope: 
-	[ 'email', 'profile' ] 
+// Google Authentication Route
+router.get("/google", passport.authenticate('google', { scope: ['email', 'profile'] }));
+
+// Google Authentication Callback Route
+router.get("/google/callback", passport.authenticate("google", {
+	successRedirect: `${process.env.CLIENT_URL}`,
+	failureRedirect: "/login/failed",
 }));
 
-router.get("/google/callback",passport.authenticate("google", {
-		successRedirect: `${process.env.CLIENT_URL}`,
-		failureRedirect: "/login/failed",
-	})
-	
-);
-
-
-router.get("/logout", (req, res) => {
-	try {
-		req.logout((err) => {
-			if (err) {
-			  return next(err);
-			}
-			
-			res.status(200).json({message:"user successfully logout"})
-		  });
-	} catch (error) {
-		res.status(500).json({message:"internal server error",errors:error.message})
-	}
-	// res.redirect(process.env.CLIENT_URL);
+// Logout Route
+router.get("/logout", (req, res, next) => {
+	req.logout((err) => {
+		if (err) {
+			return next(err);
+		}
+		res.status(200).json({ message: "User successfully logged out" });
+	});
 });
 
 module.exports = router;
