@@ -48,9 +48,9 @@ router.get(
 			jwt.sign({ id: newuser._id }, secretID, { expiresIn: '30d' }, async (err, UserToken) => {
 				newuser.sessionExpiration = new Date().getTime() + (1000 * 60 * 60 * 24 * 30); // 30 days in milliseconds
 				newuser.jwttoken = UserToken;
-				await newuser.save();
 			});
-
+			
+			await newuser.save();
 			res.redirect(`${process.env.CLIENT_URL}?userdata=${encodeURIComponent(JSON.stringify(newuser))}`);
 
 		}
