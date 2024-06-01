@@ -29,11 +29,13 @@ router.get("/login/failed", (req, res) => {
 router.get("/google", passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 // Google Authentication Callback Route
-router.get("/google/callback", passport.authenticate("google", {
-	successRedirect: `${process.env.CLIENT_URL}`,
-	failureRedirect: "/login/failed",
-}));
+router.get("/google/callback",passport.authenticate('google', { session: false, failureRedirect: `/login` }),
+(req, res) => {
+ req.user;
+  setTokensCookies(res.user)
 
+  res.redirect(`${process.env.CLIENT_URL}?verification=${res.user.emails[0].value}`);
+});
 // Logout Route
 router.get("/logout", (req, res, next) => {
 	req.logout((err) => {
