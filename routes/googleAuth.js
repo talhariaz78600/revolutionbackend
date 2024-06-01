@@ -29,12 +29,18 @@ router.get("/login/failed", (req, res) => {
 router.get("/google", passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 // Google Authentication Callback Route
-router.get("/google/callback",passport.authenticate('google', { session: false, failureRedirect: `/login` }),
-(req, res) => {
+router.get(
+	"/google/callback",
+	passport.authenticate('google', { session: false, failureRedirect: '/login' }),
+	(req, res) => {
+		// User data is now available in req.user
+		const userData = req.user;
+		console.log('User Data:', userData);
 
-
-  res.redirect(`${process.env.CLIENT_URL}?userdata=66667909656056945`);
-});
+		// Pass user data as a query parameter or handle as needed
+		res.redirect(`${process.env.CLIENT_URL}?userdata=${encodeURIComponent(JSON.stringify(userData))}`);
+	}
+);
 // Logout Route
 router.get("/logout", (req, res, next) => {
 	req.logout((err) => {
