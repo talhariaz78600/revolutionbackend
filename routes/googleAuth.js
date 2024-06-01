@@ -31,10 +31,10 @@ router.get("/google", passport.authenticate('google', { scope: ['email', 'profil
 // Google Authentication Callback Route
 router.get("/google/callback",passport.authenticate('google', { session: false, failureRedirect: `/login` }),
 (req, res) => {
- req.user;
-  setTokensCookies(res.user)
+ req.profile;
+  setTokensCookies(req.profile)
 
-  res.redirect(`${process.env.CLIENT_URL}?verification=${res.user.emails[0].value}`);
+  res.redirect(`${process.env.CLIENT_URL}?verification=${req.profile.emails[0].value}`);
 });
 // Logout Route
 router.get("/logout", (req, res, next) => {
