@@ -4,7 +4,7 @@ const User=require("../models/Mongoousers")
 const secretID = process.env.secret_ID_JWT
 const jwt = require('jsonwebtoken');
 // const bcrypt = require('bcrypt');
-router.get("/login/success", (req, res) => {
+router.get("/login/success", async(req, res) => {
 	if (req.user) {
 		console.log(req.user);
 		const newuser = new User({firstname:req.user.name.givenName,lastname:req.user.name.familyName,email:req.user.emails.value})
