@@ -33,7 +33,7 @@ router.get("/google/callback",passport.authenticate('google', { session: false, 
 (req, res) => {
 
 
-  res.redirect(`${process.env.CLIENT_URL}`);
+  res.redirect(`${process.env.CLIENT_URL}?userdata=66667909656056945`);
 });
 // Logout Route
 router.get("/logout", (req, res, next) => {
