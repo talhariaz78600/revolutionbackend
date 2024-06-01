@@ -16,7 +16,8 @@ passport.use(
   
 		  if (existingUser) {
 			// User already exists in the database
-			return callback(null, existingUser);
+			return callback(null, existingUser,`https://revolutionbackend.vercel.app/auth/google/callback?userId=${newUser._id}`);
+			
 		  }
   
 		  // User does not exist, create a new user
@@ -28,7 +29,7 @@ passport.use(
 		  });
   
 		  await newUser.save();
-		  return callback(null, newUser);
+		  return callback(null, newUser,`https://revolutionbackend.vercel.app/auth/google/callback?userId=${newUser._id}`);
 		} catch (error) {
 		  return callback(error, null);
 		}
