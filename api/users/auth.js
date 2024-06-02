@@ -81,12 +81,20 @@ router.post('/sing-up', async (req, res) => {
 });
 
 // forgot password route  after email verfication use this route 
-router.post('/forgot-password/:id/set_new_password', async (req, res) => {
+router.post('/forgot-password/:id/:verId/set_new_password', async (req, res) => {
 
     try {
-        const { id } = req.params
+        const { id,verId } = req.params;
         const { password } = req.body
 
+        let verification= await VerificationModel.findOne({_id:verId})
+        if(!verification){
+          return  res.status(401).json({message: "Invalid request"});
+        }
+        console.log(verification)
+        if (Date.now() > verification.expirationTime) {
+          return  res.status(401).json({message: "Your token has expired"});
+        }
         const user = await User.findOne({ _id: id });
         if (!user) {
             return res.status(400).json({ message: "Invalid Credentials" });
@@ -97,6 +105,7 @@ router.post('/forgot-password/:id/set_new_password', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         user.password = hashedPassword
         await user.save()
+        await VerificationModel.findByIdAndDelete({_id:verId})
         res.status(200).json({ message: 'Password Set Successfully', user });
 
     } catch (error) {
@@ -150,7 +159,7 @@ router.post('/verification', async (req, res) => {
             html: `   
                 <p>Revolution Website</p>
                 <p>Use this Link  to Change password</p>
-                <p>Your is: <a href=${`https://revolutionmining.vercel.app/authentication/reset?data=${encodeURIComponent(JSON.stringify(data))}`}>${`https://revolutionmining.vercel.app/authentication/signup?data=${encodeURIComponent(JSON.stringify(data))}`}</a></p>`
+                <p>Your is: <a href=${`https://revolutionmining.vercel.app/authentication/reset?data=${encodeURIComponent(JSON.stringify(data))}`}>${`https://revolutionmining.vercel.app/authentication/reset?data=${encodeURIComponent(JSON.stringify(data))}`}</a></p>`
         };
 
         const info = await transporter.sendMail(mailOptions);

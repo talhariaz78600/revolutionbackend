@@ -6,7 +6,7 @@ let VerificationSchema = mongoose.Schema({
     email: {
         type: String,
     },
-    sessionExpiration: {
+    expirationTime: {
         type: String,
     }
 
