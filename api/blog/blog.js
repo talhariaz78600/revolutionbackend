@@ -107,7 +107,7 @@ router.delete('/deleteBlog/:id', async (req, res) => {
     }
 })
 
-router.put('/createComment/:blogId', async (req, res) => {
+router.put('    ', async (req, res) => {
     const { blogId } = req.params;
     const { name, comment, email } = req.body;
     try {

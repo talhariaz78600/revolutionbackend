@@ -9,7 +9,8 @@ const bcrypt = require('bcrypt');
 
 router.post('/login', async (req, res) => {
     try {
-        const { email, password, } = req.body;
+        const { email, password} = req.body;
+        console.log(email,password);
         if (!email || !password) {
             return res.status(400).json({ message: "Invalid Feilds" });
         }
@@ -50,7 +51,7 @@ router.post('/login', async (req, res) => {
 router.post('/sing-up', async (req, res) => {
 
     try {
-        const {firstname,lastname,email, password,mobileNumber,address} = req.body;
+        const {firstname,lastname,email, password} = req.body;
 
         if (!email || !password || !firstname || !lastname) {
             return res.status(400).json({ message: "Invalid Feilds" });
