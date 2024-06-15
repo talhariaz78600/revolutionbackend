@@ -66,7 +66,7 @@ router.post('/sing-up', async (req, res) => {
         if (!isEmailValid) {
           return res.status(400).json({ message: 'Invalid email address' });
         }
-        
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.findOne({ email });
@@ -155,7 +155,7 @@ router.post('/sing-up', async (req, res) => {
                     <p>Dear User, ${newuser.firstname}</p>
                     <p>We are pleased to inform you that your login was successful!</p>
                     <p>Welcome back to Revolution Website. If you have any questions or need support, feel free to contact us.</p>
-                    <a class="contact-button" href=${`https://revolutionmining.vercel.app/contact`}>Contact us<a>
+                    <a class="contact-button" href=${`${process.env.CLIENT_URL}/contact`}>Contact us<a>
                   </div>
                   <div class="footer">
                     <p>&copy; 2024 Revolution Website. All rights reserved.</p>
