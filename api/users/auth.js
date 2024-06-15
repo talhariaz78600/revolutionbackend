@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const VerificationModel=require("../../models/VerificationModel")
 //User login 
 const transporter = require("../../transpoter/transpoter")
-const verifyEmail= require("../../routes/verifyemail")
+
 
 
 router.post('/login', async (req, res) => {
@@ -61,16 +61,12 @@ router.post('/sing-up', async (req, res) => {
         if (!email || !password || !firstname || !lastname) {
             return res.status(400).json({ message: "Invalid Feilds" });
         }
-        const isEmailValid = await verifyEmail(email);
-
-        if (!isEmailValid) {
-          return res.status(400).json({ message: 'Invalid email address' });
-        }
+      
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.findOne({ email });
-
+        // console.log(user);
         if (user) {
             return res.status(404).json({ message: "User Already Exist" });
         }
@@ -80,12 +76,12 @@ router.post('/sing-up', async (req, res) => {
         jwt.sign({ id: newuser._id }, secretID, { expiresIn: '30d' }, async (err, UserToken) => {
             newuser.sessionExpiration = new Date().getTime() + (1000 * 60 * 60 * 24 * 30); // 30 days in milliseconds
             newuser.jwttoken = UserToken;
-            await newuser.save();
+            
             res.status(200).json({ message: 'Successfully Sign In', newuser });
+            await newuser.save();
         });
 
 
-        await newuser.save();
         const mailOptions = {
             from: '"Revolution Website" <trdeveloper105@gmail.com>',
             to: newuser.email,
