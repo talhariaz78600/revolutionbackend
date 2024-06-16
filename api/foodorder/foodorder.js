@@ -8,7 +8,7 @@ router.post('/productorder', async (req, res) => {
     try {
         const item = new FoodOrder({
             userId: userId,
-            productId: productId,
+            product: productId,
             price: price,
             title:title,
             noofitems

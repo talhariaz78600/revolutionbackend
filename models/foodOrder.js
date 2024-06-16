@@ -1,9 +1,18 @@
 let mongoose = require('mongoose');
-let productdetail=mongoose.Schema({
-    Id:{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Equipmentproduct',
-    }
+let productdetail = mongoose.Schema({
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Equipmentproduct',
+  },
+  orderStatus: {
+    type: String
+  },
+  orderId: {
+    type: String
+  },
+  productprice:{
+    type: String
+  }
 });
 let orderSchema = mongoose.Schema({
   userId: {
@@ -11,7 +20,7 @@ let orderSchema = mongoose.Schema({
     ref: 'User',
     required: true
   },
-  productId: [productdetail],
+  product: [productdetail],
   noofitems: {
     type: String,
   },
