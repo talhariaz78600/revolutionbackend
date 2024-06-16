@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const FoodOrder = require('../../models/foodOrder')
-
+const Product=require('../../models/equipment')
 ///////////////////// /api/order/foodorder/////////////////////
 router.post('/productorder', async (req, res) => {
     const {userId,product,price,title,noofitems} = req.body;
@@ -14,6 +14,15 @@ router.post('/productorder', async (req, res) => {
             noofitems
         })
         await item.save();
+
+        product.map(async (item)=>{
+            console.log(item.productId);
+            let data= await Product.findOne({_id:item.productId})
+            data.status=true;
+            await data.save();
+        })
+
+
         res.status(200).json({message:"payment successfully",item})
     } catch (error) {
         res.status(500).json({message:"Internal server error"})
