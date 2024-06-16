@@ -22,7 +22,7 @@ router.post('/:userId/update-profile', async (req, res) => {
     try {
         const { userId } = req.params
         const { email, mobileNumber,firstname,lastname,address} = req.body;
-        
+        console.log(req.body);
         if (!userId) {
             return res.status(400).json({ message: 'Invalid User Id' });
         }
@@ -37,7 +37,7 @@ router.post('/:userId/update-profile', async (req, res) => {
             currentUser.email = email
         }
         if (firstname) {
-            currentUser.firstname = fristname
+            currentUser.firstname = firstname
         }
         if (lastname) {
             currentUser.lastname = lastname
