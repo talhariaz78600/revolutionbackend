@@ -4,11 +4,11 @@ const FoodOrder = require('../../models/foodOrder')
 
 ///////////////////// /api/order/foodorder/////////////////////
 router.post('/productorder', async (req, res) => {
-    const {userId,productId,price,title,noofitems} = req.body;
+    const {userId,product,price,title,noofitems} = req.body;
     try {
         const item = new FoodOrder({
             userId: userId,
-            product: productId,
+            product: product,
             price: price,
             title:title,
             noofitems
