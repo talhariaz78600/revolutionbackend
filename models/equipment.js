@@ -3,18 +3,16 @@ let EquipmentSchema = mongoose.Schema({
     producttype: {
         type: String,
     },
+    imageUrl: {
+        type: String,
+    },
     title: {
         type: String,
     },
     price: {
         type: Number,
     },
-    imageUrl: {
-        type: String,
-    },
-    condition: {
-        type: String
-    },
+ 
     power: {
         type: String
     },
@@ -23,6 +21,9 @@ let EquipmentSchema = mongoose.Schema({
     },
     hostingfee: {
         type: Number
+    },
+    condition: {
+        type: String
     },
     data: {
         type: Date,

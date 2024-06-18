@@ -10,7 +10,6 @@ router.post('/productorder', async (req, res) => {
             userId: userId,
             product: product,
             price: price,
-            title:title,
             noofitems
         })
         await item.save();

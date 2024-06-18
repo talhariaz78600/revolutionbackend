@@ -10,9 +10,21 @@ let productdetail = mongoose.Schema({
   orderId: {
     type: String
   },
-  productprice:{
+  productprice: {
     type: String
-  }
+  },
+  title: {
+    type: String,
+  },
+  power: {
+    type: String
+  },
+  machines: {
+    type: String
+  },
+  hostingfee: {
+    type: Number
+  },
 });
 let orderSchema = mongoose.Schema({
   userId: {
@@ -23,9 +35,6 @@ let orderSchema = mongoose.Schema({
   product: [productdetail],
   noofitems: {
     type: String,
-  },
-  title: {
-    type: String
   },
   price: {
     type: Number,
