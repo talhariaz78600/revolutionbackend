@@ -4,12 +4,13 @@ const FoodOrder = require('../../models/foodOrder')
 const Product=require('../../models/equipment')
 ///////////////////// /api/order/foodorder/////////////////////
 router.post('/productorder', async (req, res) => {
-    const {userId,product,price,title,noofitems} = req.body;
+    const {userId,product,price,noofitems,status} = req.body;
     try {
         const item = new FoodOrder({
             userId: userId,
             product: product,
             price: price,
+            status:status,
             noofitems
         })
         await item.save();

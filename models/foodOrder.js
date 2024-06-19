@@ -23,7 +23,7 @@ let productdetail = mongoose.Schema({
     type: String
   },
   hostingfee: {
-    type: Number
+    type: String
   },
 });
 let orderSchema = mongoose.Schema({
