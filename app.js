@@ -14,6 +14,7 @@ const adminRouter = require('./api/admin/admin');
 const userRouter = require('./api/users/user');
 const authRouter = require('./api/users/auth');
 const blogRouter = require('./api/blog/blog');
+const mediaRouter = require('./api/socail/socail');
 const productRouter = require('./api/Equipment/equipment');
 const orders = require('./api/foodorder/foodorder')
 const authRoute = require("./routes/googleAuth");
@@ -69,6 +70,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/product', productRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/blog', blogRouter);
+app.use('/api/media', mediaRouter);
 app.use('/api/order', orders);
 app.use("/auth", authRoute);
 
