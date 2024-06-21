@@ -37,14 +37,14 @@ let orderSchema = mongoose.Schema({
     type: String,
   },
   price: {
-    type: Number,
+    type: String,
   },
   date: {
     type: Date,
     default: Date.now
   },
   status: {
-    type: Boolean,
+    type: String,
     default: false
   }
 
