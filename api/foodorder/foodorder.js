@@ -13,14 +13,14 @@ router.post('/productorder', async (req, res) => {
             status:status,
             noofitems
         })
-        await item.save();
-
+        
         product.map(async (item)=>{
             console.log(item.productId);
             let data= await Product.findOne({_id:item.productId})
             data.status=true;
             await data.save();
         })
+        await item.save();
 
 
         res.status(200).json({message:"payment successfully",item})
