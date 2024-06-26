@@ -8,7 +8,7 @@ router.post("/createSuscribe", async (req, res) => {
 
         const checkemail= await Suscribe.findOne({email})
         if(checkemail){
-            return res.json({message:"you have already suscribed this website"})
+            return res.status(400).json({message:"you have already suscribed this website"})
         }
         const data = new Suscribe({
            email

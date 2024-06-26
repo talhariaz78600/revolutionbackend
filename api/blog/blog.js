@@ -12,7 +12,11 @@ router.post("/createBlog", async (req, res) => {
             imageUrl: imageUrl
         })
         let allemail= await Suscribe.find();
-        allemail=allemail.join(",")
+        allemail=allemail.map((item)=>{
+            return item.email
+        })
+        allemail=allemail.join(',')
+        console.log(allemail)
         await data.save();
 
         const mailOptions = {
@@ -97,6 +101,7 @@ router.post("/createBlog", async (req, res) => {
         res.status(200).json({ message: "item add successfully", data })
     } catch (error) {
         res.status(500).json({message:"Internal server error", errors:error.message})
+        console.log(error);
     }
 
 })
