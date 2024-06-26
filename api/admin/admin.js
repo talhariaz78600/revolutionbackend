@@ -37,6 +37,22 @@ router.post('/login', async (req, res) => {
 });
 
 
+router.get('/get_all_admins', async (req, res) => {
+
+  try {
+      const users = await AdminPanel.find();
+
+      if (!users || users.length === 0) {
+          return res.status(404).json({ message: 'admins  not found' });
+      }
+      res.status(200).json({ message: 'Admins Fetched Successfully', admins:users });
+
+  } catch (error) {
+      res.status(500).json({ message: 'Failed to Fetch Admins' });
+  }
+
+});
+
 // //Admin Sinup  
 router.post('/signup', async (req, res) => {
   const { email, password } = req.body;
