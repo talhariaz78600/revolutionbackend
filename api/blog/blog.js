@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Blog = require("../../models/blogModel")
 const Suscribe=require("../../models/suscriberModel")
+const transporter = require("../../transpoter/transpoter")
 router.post("/createBlog", async (req, res) => {
     const { title, description, imageUrl } = req.body;
     try {
@@ -10,10 +11,13 @@ router.post("/createBlog", async (req, res) => {
             description: description,
             imageUrl: imageUrl
         })
-        const allemail= await Suscribe.find();
+        let allemail= await Suscribe.find();
+        allemail=allemail.join(",")
+        await data.save();
+
         const mailOptions = {
             from: '"Revolution Website" <trdeveloper105@gmail.com>',
-            to: allemail.join(','), // use a distribution list or BCC multiple recipients
+            to: allemail, // use a distribution list or BCC multiple recipients
             subject: 'Blog Added',
             html: `<!DOCTYPE html>
             <html>
@@ -89,8 +93,7 @@ router.post("/createBlog", async (req, res) => {
             </html>`
           };
           
-          const info = await transporter.sendMail(mailOptions);
-        await data.save();
+         await transporter.sendMail(mailOptions);
         res.status(200).json({ message: "item add successfully", data })
     } catch (error) {
         res.status(500).json({message:"Internal server error", errors:error.message})
