@@ -89,6 +89,32 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-//Admin login 
+////////////////////////////// Delete admin api//////////////////////////////
+router.delete('/:id/delete_admin', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+      const user = await AdminPanel.findOne({ _id: id });
+
+      if (!user) {
+          return res.status(404).json({ message: 'Admin not found' });
+      }
+     
+      // if (user.awsbucketObjectkey) {
+      //     await mediaDeleteS3(user.awsbucketObjectkey)
+      // }
+      await AdminPanel.findByIdAndDelete(id);
+
+
+
+      res.status(200).json({ message: 'Account deleted successfully' });
+
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to Delete Account, try Again Later', error: error.message });
+  }
+});
+
+
 
 module.exports = router;
