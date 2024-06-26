@@ -5,6 +5,11 @@ const Suscribe = require("../../models/suscriberModel")
 router.post("/createSuscribe", async (req, res) => {
     const { email } = req.body;
     try {
+
+        const checkemail= await Suscribe.findOne({email})
+        if(checkemail){
+            return res.json({message:"you have already suscribed this website"})
+        }
         const data = new Suscribe({
            email
         })

@@ -2,7 +2,7 @@ let mongoose = require('mongoose');
 let suscriberSchema = mongoose.Schema({
 
     email: {
-        type: String,
+        type: String
     }
 
 }, { timestamps: true });
