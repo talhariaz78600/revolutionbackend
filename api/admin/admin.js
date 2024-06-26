@@ -53,7 +53,7 @@ router.get('/get_all_admins', async (req, res) => {
 
 });
 
-// //Admin Sinup  
+//Admin Sinup  
 router.post('/signup', async (req, res) => {
   const { email, password } = req.body;
   console.log(req.body)
@@ -76,11 +76,9 @@ router.post('/signup', async (req, res) => {
       if (err) {
         return res.status(500).json({ message: 'Failed to generate token' });
       }
-
       newAdmin.jwtadmintoken = userToken;
       newAdmin.sessionExpiration = new Date().getTime() + (12 * 60 * 60 * 1000); // 12 hour
       await newAdmin.save();
-
       res.status(200).json({ message: 'Admin successfully signed up', admin: newAdmin });
     });
   } catch (error) {
@@ -104,9 +102,6 @@ router.delete('/:id/delete_admin', async (req, res) => {
       //     await mediaDeleteS3(user.awsbucketObjectkey)
       // }
       await AdminPanel.findByIdAndDelete(id);
-
-
-
       res.status(200).json({ message: 'Account deleted successfully' });
 
   } catch (error) {
