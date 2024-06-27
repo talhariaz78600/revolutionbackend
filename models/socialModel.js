@@ -13,6 +13,12 @@ let mediaSchema = mongoose.Schema({
     },
     instagramUrl: {
         type: String,
+    },
+    email:{
+        type:String
+    },
+    mobileno:{
+        type:String
     }
 }, { timestamps: true });
 module.exports = mongoose.model('Media', mediaSchema);
