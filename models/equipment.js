@@ -35,6 +35,9 @@ let EquipmentSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    deposit:{
+        type:Number
+    },
     status: {
         type: Boolean,
         default: false
