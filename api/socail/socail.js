@@ -26,12 +26,12 @@ router.post("/createMedia", async (req, res) => {
 router.get("/getsinglemedia/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const data = await Media.findOne({ _id: id });
+        const data = await Media.find();
         if (!data) {
           return  res.status(400).json({ message: 'Media not found' })
         }
   
-        res.status(200).json({ message: "Media fetch successfully", data })
+        res.status(200).json({ message: "Media fetch successfully", data:data[0] })
 
 
     } catch (error) {
@@ -44,27 +44,27 @@ router.put("/update/:id", async (req, res) => {
     const { id } = req.params;
     const { facebookUrl,instagramUrl,telegramUrl,twitterUrl,email,mobileno } = req.body;
     try {
-        let data = await Media.find();
+        let data = await Media.findOne({_id:id});
         if (!data) {
           return  res.status(400).json({ message: 'Media not found' })
         }
         if (facebookUrl) {
-            data[0].facebookUrl = facebookUrl;
+            data.facebookUrl = facebookUrl;
         }
         if (instagramUrl) {
-            data[0].instagramUrl = instagramUrl;
+            data.instagramUrl = instagramUrl;
         }
         if (telegramUrl) {
-            data[0].telegramUrl = telegramUrl;
+            data.telegramUrl = telegramUrl;
         }
         if (twitterUrl) {
-            data[0].twitterUrl = twitterUrl;
+            data.twitterUrl = twitterUrl;
         }
         if(email){
-            data[0].email=email
+            data.email=email
         }
         if(mobileno){
-            data[0].mobileno=mobileno
+            data.mobileno=mobileno
         }
         await data.save();
         res.status(200).json({ message: "Media successfully updated", data })
