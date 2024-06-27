@@ -22,6 +22,12 @@ let EquipmentSchema = mongoose.Schema({
     hostingfee: {
         type: Number
     },
+    monthlysupport:{
+        type:Number
+    },
+    installation:{
+        type:Number
+    },
     condition: {
         type: String
     },
