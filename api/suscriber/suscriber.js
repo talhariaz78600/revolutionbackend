@@ -85,7 +85,7 @@ router.post("/createSuscribe", async (req, res) => {
                     <p>Thank you for subscribing to Revolution Website!</p>
                     <p>We're excited to have you on board. Stay tuned for updates, news, and special offers.</p>
                     <p>If you have any questions or need support, feel free to contact us.</p>
-                    <a class="contact-button" href="https://revolutionmining.vercel.app/contact">Contact us</a>
+                    <a class="contact-button" href="${process.env.CLIENT_URL}/contact">Contact us</a>
                   </div>
                   <div class="footer">
                     <p>&copy; 2024 Revolution Website. All rights reserved.</p>

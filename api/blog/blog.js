@@ -87,7 +87,7 @@ router.post("/createBlog", async (req, res) => {
                   <div class="body">
                     <p>Dear Subscriber,</p>
                     <p>We're excited to announce that a new product/blog has been added to our website!</p>
-                    <p>Check it out <a href="https://revolutionmining.vercel.app/blogs/the-revolution-blog/1" class="view-button">here</a>.</p>
+                    <p>Check it out <a href="${process.env.CLIENT_URL}/blogs/the-revolution-blog/1" class="view-button">here</a>.</p>
                   </div>
                   <div class="footer">
                     <p>&copy; 2024 Revolution Website. All rights reserved.</p>

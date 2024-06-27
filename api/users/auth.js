@@ -249,7 +249,7 @@ router.post('/verification', async (req, res) => {
             html: `   
                 <p>Revolution Website</p>
                 <p>Use this Link  to Change password</p>
-                <p>Your is: <a href=${`https://revolutionmining.vercel.app/authentication/reset?data=${encodeURIComponent(JSON.stringify(data))}`}>${`https://revolutionmining.vercel.app/authentication/reset?data=${encodeURIComponent(JSON.stringify(data))}`}</a></p>`
+                <p>Your is: <a href=${`${process.env.CLIENT_URL}/authentication/reset?data=${encodeURIComponent(JSON.stringify(data))}`}>${`https://revolutionmining.vercel.app/authentication/reset?data=${encodeURIComponent(JSON.stringify(data))}`}</a></p>`
         };
 
         const info = await transporter.sendMail(mailOptions);
