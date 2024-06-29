@@ -20,5 +20,13 @@ let mediaSchema = mongoose.Schema({
     mobileno:{
         type:String
     }
+    ,
+    open:{
+        type:String
+    }
+    ,
+    close:{
+        type:String
+    }
 }, { timestamps: true });
 module.exports = mongoose.model('Media', mediaSchema);

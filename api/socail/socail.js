@@ -3,7 +3,7 @@ const router = express.Router();
 const Media = require("../../models/socialModel")
 
 router.post("/createMedia", async (req, res) => {
-    const { facebookUrl,instagramUrl,telegramUrl,twitterUrl,email,mobileno } = req.body;
+    const { facebookUrl,instagramUrl,telegramUrl,twitterUrl,email,mobileno,open,close } = req.body;
     try {
         const data = new Media({
             facebookUrl: facebookUrl,
@@ -11,7 +11,9 @@ router.post("/createMedia", async (req, res) => {
             telegramUrl: telegramUrl,
             twitterUrl :twitterUrl,
             email,
-            mobileno 
+            mobileno,
+            open,
+            close 
         })
         await data.save();
         res.status(200).json({ message: "Media add successfully", data })
@@ -42,7 +44,7 @@ router.get("/getsinglemedia/:id", async (req, res) => {
 
 router.put("/update/:id", async (req, res) => {
     const { id } = req.params;
-    const { facebookUrl,instagramUrl,telegramUrl,twitterUrl,email,mobileno } = req.body;
+    const { facebookUrl,instagramUrl,telegramUrl,twitterUrl,email,mobileno,open,close } = req.body;
     try {
         let data = await Media.findOne({_id:id});
         if (!data) {
@@ -65,6 +67,15 @@ router.put("/update/:id", async (req, res) => {
         }
         if(mobileno){
             data.mobileno=mobileno
+        }
+        if(mobileno){
+            data.mobileno=mobileno
+        }
+        if(open){
+            data.open=open
+        }
+        if(close){
+            data.close=close
         }
         await data.save();
         res.status(200).json({ message: "Media successfully updated", data })

@@ -14,6 +14,7 @@ const adminRouter = require('./api/admin/admin');
 const userRouter = require('./api/users/user');
 const authRouter = require('./api/users/auth');
 const blogRouter = require('./api/blog/blog');
+const contactRouter = require('./api/contact/contact');
 const mediaRouter = require('./api/socail/socail');
 const suscribeRouter = require('./api/suscriber/suscriber');
 const productRouter = require('./api/Equipment/equipment');
@@ -32,8 +33,8 @@ app.use(cookieParser());
 
 
 app.use(cors({
-  origin: '*', // Allow all origins
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  origin: '*',
+  credentials: true, 
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
 }));
@@ -75,6 +76,7 @@ app.use('/api/media', mediaRouter);
 app.use('/api/order', orders);
 app.use('/api/suscriber', suscribeRouter);
 app.use("/auth", authRoute);
+app.use("/api/contact", contactRouter);
 
 app.get('/', async (req, res) => {
   res.json({ message: `server is running at ${PORT}` })

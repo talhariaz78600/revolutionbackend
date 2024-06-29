@@ -11,17 +11,6 @@ let contactSchema = mongoose.Schema({
     },
     message: {
         type: String,
-    },
-    productId:{
-        type:String
-    },
-    numberProduct:{
-        type:Number,
-    },
-    status: {
-        type: Boolean,
-        default: false
     }
-
 }, { timestamps: true });
-module.exports = mongoose.model('Contact', contactSchema);
+module.exports = mongoose.model('Message', contactSchema);

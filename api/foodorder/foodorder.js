@@ -17,7 +17,10 @@ router.post('/productorder', async (req, res) => {
         product.map(async (item)=>{
             console.log(item.productId);
             let data= await Product.findOne({_id:item.productId})
-            data.status=true;
+            data.machines=data.machines-item.machines
+            if(data.machines===0){
+                data.status=true;      
+            }
             await data.save();
         })
         await item.save();  

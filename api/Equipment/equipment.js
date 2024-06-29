@@ -4,7 +4,7 @@ const Equipment = require("../../models/equipment")
 const Suscribe=require("../../models/suscriberModel")
 const transporter = require("../../transpoter/transpoter")
 router.post("/createProduct", async (req, res) => {
-    const { title, price,hostingfee ,condition,imageUrl,power,machines,producttype,monthlysupport,installation,deposit} = req.body;
+    const { title, price,hostingfee ,condition,imageUrl,power,machines,producttype,monthlysupport,installation,deposit,date} = req.body;
     try {
         const data = new Equipment({
             title,
@@ -17,7 +17,8 @@ router.post("/createProduct", async (req, res) => {
             producttype,
             monthlysupport,
             installation,
-            deposit
+            deposit,
+            date
         })
         await data.save();
         let allemail= await Suscribe.find();
@@ -175,6 +176,9 @@ router.put("/updateProduct/:id", async (req, res) => {
         if(deposit){
             data.deposit=deposit
         }
+        if(date){
+          data.date=date
+      }
         await data.save();
         res.status(200).json({ message: "Product successfully updated", data })
 
