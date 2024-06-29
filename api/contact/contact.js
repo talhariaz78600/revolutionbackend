@@ -30,7 +30,7 @@ router.delete('/deleteContact/:id', async (req, res) => {
         if (!data) {
             return res.status(400).json({ message: "Contact not found" })
         }
-        data = await Contact.findByIdandDelete(id)
+        data = await Contact.findByIdAndDelete(id)
         res.status(200).json({ message: "Contact successfully deleted", data })
     } catch (error) {
         res.status(500).json({ message: "Internal server error" })
