@@ -140,7 +140,7 @@ router.get('/getsingleProduct/:id', async (req, res) => {
 })
 router.put("/updateProduct/:id", async (req, res) => {
     const { id } = req.params;
-    const {title, price,hostingfee,condition,power,machines,producttype, monthlysupport,installation,deposit} = req.body;
+    const {title, price,hostingfee,condition,power,machines,producttype, monthlysupport,installation,deposit,date} = req.body;
     try {
         const data = await Equipment.findOne({ _id: id });
         if (!data) {
